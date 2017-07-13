@@ -1,0 +1,21 @@
+@CHARSET "EUC-KR";
+table{
+	width: 800px;
+	height: 20px;
+}
+th, td{
+	text-align: center;
+	border: 1px solid #000000;
+}
+th{
+	font-weight: bold;
+	background: gray;
+}
+
+#search{
+	width: 100px;
+	margin: 10px 60px;
+}
+.bt_group{
+	margin-left: 395px;
+}

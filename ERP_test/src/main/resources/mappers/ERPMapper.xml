@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.mapper.ERPMapper">
+	<cache />
+	
+ 	<insert id="register" parameterType="LoginVo">
+		insert into login(
+			id, pw)
+		values(
+		#{id}, #{pw}
+		)	
+	</insert>
+
+	
+	<insert id="insert_staff" parameterType="ERPVO">
+		insert all
+		insert into staff(
+			staff_no, staff_name, jumin_no,  school_code, religion_code, graduate_day)
+		values(
+		 staff_seq.nextval, #{staff_name}, #{jumin_no}, #{school_code}, #{religion_code}, #{graduate_day}
+		)	
+		insert into staff_skill(staff_no, staff_skill_no)
+		values(#{staff_no}, #{staff_skill_no} )
+	</insert>
+
+	
+	
+	<select id="staff_all" resultType="ERPVO">
+	select staff_no, staff_name, jumin_no, religion_name, graduate_day
+	from staff s, code_religion cr
+	where s.religion_code = cr.religion_code
+	</select>
+	
+<!-- 	<select id="staff_one" parameterType="int" resultMap="ERPVO">
+	select staff_no, staff_name, jumin_no, religion_code, school_code, skill_name, graduate_day
+	from staff s, code_skill cs
+	where s.
+	and staff_no = #{staff_no}
+	</select> -->
+	
+	</mapper>
