@@ -20,7 +20,7 @@ $(function(){
 	
 	$("#register").on("click", function(){
 	
-		window.open("/staff_input_form", "", "width:900px; height:300px;");
+		window.open("/staff_input_form", "", "width:900px; height:200px;");
 		
 	});
 	
@@ -164,7 +164,7 @@ $(function(){
 					<td>${list.religion_name}</td>
 					<td>${list.graduate_day}</td>
 					<td>
-						<button id="updel" name="updel" class="updel" onclick="updel(location.href='/staff_updel_form?staff_no='${list.staff_name}')">수정/삭제</button>
+						<button id="updel" name="updel" class="updel" onclick="location.href='/staff_updel_form?staff_no='${list.staff_no}'">수정/삭제</button>
 					</td>
 				</tr>
 				</c:forEach>

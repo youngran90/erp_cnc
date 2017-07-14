@@ -14,16 +14,24 @@
 
 	
 	<insert id="insert_staff" parameterType="ERPVO">
-		insert all
 		insert into staff(
 			staff_no, staff_name, jumin_no,  school_code, religion_code, graduate_day)
 		values(
 		 staff_seq.nextval, #{staff_name}, #{jumin_no}, #{school_code}, #{religion_code}, #{graduate_day}
 		)	
-		insert into staff_skill(staff_no, staff_skill_no)
-		values(#{staff_no}, #{staff_skill_no} )
 	</insert>
-
+	
+	
+	<select id="staff_no" resultType="int" parameterType="String">
+	select staff_no from staff
+	where jumin_no = #{jumin_no}
+	</select>
+	
+	
+	<insert id="insert_staff_skill" parameterType="ERPVO">
+	insert into staff_skill(staff_no, staff_skill_no, skill_code)
+		values(#{staff_no}, staff_skill_seq.nextval, #{skill_code}  )
+	</insert>
 	
 	
 	<select id="staff_all" resultType="ERPVO">
@@ -32,11 +40,11 @@
 	where s.religion_code = cr.religion_code
 	</select>
 	
-<!-- 	<select id="staff_one" parameterType="int" resultMap="ERPVO">
-	select staff_no, staff_name, jumin_no, religion_code, school_code, skill_name, graduate_day
-	from staff s, code_skill cs
-	where s.
-	and staff_no = #{staff_no}
-	</select> -->
+ 	<select id="staff_one" parameterType="int" resultMap="ERPVO">
+	select staff_name, jumin_no, religion_code, school_code, skill_code, graduate_day
+	from staff s, staff_skill ss
+	where s.staff_no = ss.staff_no
+	and s.staff_no = #{staff_no}
+	</select> 
 	
 	</mapper>

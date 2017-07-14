@@ -43,20 +43,24 @@
 			if(month > 12 || month <1 || day < 1 || day> 31 ){
 		 		alert("생년월일을 확인해주세요");
 				var jumin_f = $("#jumin_f").focuss();
-
+					return false;
 			}
 			var jumin_b = $("#jumin_b").val();
-			
+			alert(jumin_f+jumin_b);
 			var jumin_no = jumin_f + "-" + jumin_b;
 			$("#jumin_no").val(jumin_no);
 		
 			var school_name = $("input[name=school_code]:checked").val();
 		
-			var skill_names =[];
+			var skill_codes =[];
 			
-			$("input[name=staff_skill_no]:checked").each(function(){
-				skill_names.push($(this).val());
-			});
+			
+			$("input[name=skill_code]:checked").each(function(){
+				skill_codes.push($(this).val());
+			})
+			alert(skill_codes);
+			$("#skill_codes").val(skill_codes);
+			
 	
 			var before_grade_year =  $("#before_grade_year").val();
 			var before_grade_month =  $("#before_grade_month").val();
@@ -78,6 +82,7 @@
 				$("#after_grade_year").val("");
 				$("#after_grade_month").val("");
 				$("#after_grade_day").val("");
+				return false;
 			}else{
 				$("#graduate_day").val(after_graduate_day);
 			}
@@ -85,15 +90,17 @@
 			if(staff_name == ''){
 				alert("이름을 입력해주세요.");
 				$("#staff_name").focus();
-				return;
+				return false;
 			}else if(jumin_f == '' || jumin_b == ''){
 				alert("주민번호을 입력해주세요.");
 				$("#jumin_f").focus();
-				return;
+				return false;
 			}else if($("input:checkbox[name=school_code]:checked").length < 1){
 				alert("학력을 선택해주세요.");
-			}else if($("input:checkbox[name=staff_skill_no]:checked").length < 1){
+				return false;
+			}else if($("input:checkbox[name=skill_code]:checked").length < 1){
 				alert("기술을 하나이상  선택해주세요.");
+				return false;	
 			}else{
 				if (confirm("정말 저장하시겠습니까?") == true){    //확인
 				document.getElementById('registerForm').submit();
@@ -145,11 +152,11 @@
 						<input type="checkbox" name="school_code" id="school_code" value="3">일반대졸</td>
 					<td>기술</td>
 					<td colspan="3">
-						<input type="checkbox" name="staff_skill_no" id="staff_skill_no" class="chkclass" value="Java" checked="checked">Java 
-						<input type="checkbox" name="staff_skill_no" id="staff_skill_no" class="chkclass" value="JSP">JSP 
-						<input type="checkbox" name="staff_skill_no" id="staff_skill_no" class="chkclass" value="ASP">ASP
-						<input type="checkbox" name="staff_skill_no" id="staff_skill_no" class="chkclass"  value="PHP">PHP
-						<input type="checkbox" name="staff_skill_no" id="staff_skill_no"  class="chkclass" value="Delphi">Delphi
+						<input type="checkbox" name="skill_code" id="skill_code" class="chkclass" value="1" checked="checked">Java 
+						<input type="checkbox" name="skill_code" id="skill_code" class="chkclass" value="2">JSP 
+						<input type="checkbox" name="skill_code" id="skill_code" class="chkclass" value="3">ASP
+						<input type="checkbox" name="skill_code" id="skill_code" class="chkclass"  value="4">PHP
+						<input type="checkbox" name="skill_code" id="skill_code"  class="chkclass" value="5">Delphi
 					</td>
 				</tr>
 				<tr>
@@ -200,6 +207,7 @@
 					
 					<input type="hidden" id="jumin_no" name="jumin_no" value="">
 					<input type="hidden" id="graduate_day" name="graduate_day" value="">
+					<input type="hidden" id="skill_codes" name="skill_codes" value="">
 					</td>
 				</tr> 
 			</tbody>
