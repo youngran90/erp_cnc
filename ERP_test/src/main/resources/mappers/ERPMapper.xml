@@ -3,14 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.erp.mapper.ERPMapper">
 	<cache />
-	
+<!-- 	
  	<insert id="register" parameterType="LoginVo">
 		insert into login(
 			id, pw)
 		values(
 		#{id}, #{pw}
 		)	
-	</insert>
+	</insert> -->
 
 	
 	<insert id="insert_staff" parameterType="ERPVO">
@@ -28,7 +28,7 @@
 	</select>
 	
 	
-	<insert id="insert_staff_skill" parameterType="ERPVO">
+	<insert id="insert_staff_skill" parameterType="skillVO">
 	insert into staff_skill(staff_no, staff_skill_no, skill_code)
 		values(#{staff_no}, staff_skill_seq.nextval, #{skill_code}  )
 	</insert>
@@ -40,11 +40,58 @@
 	where s.religion_code = cr.religion_code
 	</select>
 	
- 	<select id="staff_one" parameterType="int" resultMap="ERPVO">
-	select staff_name, jumin_no, religion_code, school_code, skill_code, graduate_day
-	from staff s, staff_skill ss
-	where s.staff_no = ss.staff_no
-	and s.staff_no = #{staff_no}
+ 	<select id="staff_one" parameterType="int" resultType="ERPVO">
+	select staff_name, jumin_no, religion_code, school_code, graduate_day
+	from staff where staff_no = #{staff_no}
 	</select> 
+	
+	<select id="getkillList" parameterType="int" resultType="skillVO">
+	select * from staff_skill where staff_no = #{staff_no}
+	</select> 
+	
+	
+	
+	
+	<select id="searh_staff" parameterType="ERPVO" resultType="ERPVO">
+	select distinct staff_name, jumin_no, religion_code, school_code , graduate_day
+	from staff s, staff_skill ss
+	where s.staff_no =  ss.staff_no
+	<if test="staff_name != null">
+	 and staff_name  LIKE #{staff_name} 
+	</if>
+	<if test="gender != null">
+		 and SUBSTR(jumin_no, 8,1) in
+		  <foreach item="item" index="index" collection="gender" open="(" separator="," close=")">
+                    #{item}
+   </foreach>
+   </if>
+	<if test="school_codes != null">
+		 and school_code  in
+		  <foreach item="school" index="index" collection="school_codes" open="(" separator="," close=")">
+                    #{school}
+   </foreach>
+	</if>
+	<if test='before_graduate_day != "--".toString()'>
+		 and graduate_day<![CDATA[>=]]>  #{before_graduate_day}
+	</if>
+	<if test='after_graduate_day != "--".toString()'>
+		and graduate_day <![CDATA[<=]]> #{after_graduate_day}
+	</if>
+	<if test="skill_codes != null">
+	and 	 skill_code in
+	 <foreach item="skill" index="index" collection="skill_codes" open="(" separator="," close=")">
+                    #{skill}
+   </foreach>
+	</if>
+	</select>
+	
+	<select id="searh_staff_skill" parameterType="ERPVO" resultType="skillVO">
+	select staff_no, skill_code from staff_skill
+	where staff_no = #{staff_no}
+	</select>
+	
+	<delete id="staff_delete">
+	
+	</delete>
 	
 	</mapper>

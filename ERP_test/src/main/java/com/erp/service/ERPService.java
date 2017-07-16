@@ -37,8 +37,21 @@ public class ERPService {
 		return dao.staff_all();
 	}
 	
-	public List<ERPVO>staff_one(int staff_no)throws Exception{
+	public ERPVO staff_one(int staff_no)throws Exception{
 		return dao.staff_one(staff_no);
 	}
 	
+	//조건 검색
+	public List<ERPVO>searh_staff(ERPVO vo)throws Exception{
+		System.out.println(vo.getStaff_name());
+		System.out.println(vo.getSchool_code());
+		System.out.println(vo.getBefore_graduate_day());
+		System.out.println(vo.getAfter_graduate_day());
+		
+		return dao.searh_staff(vo);
+	}
+
+	public List<skillVO> getkillList(int staff_no) {
+		return dao.getkillList(staff_no);
+	}
 }

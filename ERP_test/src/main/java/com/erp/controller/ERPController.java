@@ -78,15 +78,45 @@ public class ERPController {
 		System.out.println("staff_all");
 		List<ERPVO> list = service.staff_all();
 		System.out.println(list.toString());
-		model.addAttribute("staff_all",list );
+		model.addAttribute("list",list );
 		return "staff_search_form";
 	}
 	
-	@RequestMapping(value="/staff_updel_form")
+	@RequestMapping(value="/staff_updel_form", method=RequestMethod.GET)
 	public String staff_updel_form(@Param("staff_no") int staff_no, Model model)throws Exception{
 		
-		List<ERPVO> list = service.staff_one(staff_no);
-		model.addAttribute("list", list);
+		ERPVO userErp= service.staff_one(staff_no);
+		List<skillVO> skillList = null;
+		// 존재
+		if(userErp != null){
+			skillList = service.getkillList(staff_no);
+			System.out.println("skillList : " + skillList.size());
+		}
+		model.addAttribute("userErp", userErp);
+		model.addAttribute("skillList", skillList);
 		return "staff_updel_form";
+	}
+	
+	@RequestMapping(value="/search", method=RequestMethod.POST)
+	public String searh_staff(@ModelAttribute("searchForm") ERPVO erp, Model model)throws Exception{
+		
+		System.out.println("in");
+		
+		String search_name = erp.getStaff_name();
+		String staff_name = "%"+search_name+"%";
+		erp.setStaff_name(staff_name);
+		List<ERPVO> list = service.searh_staff(erp);
+		System.out.println(erp.toString());
+		if(!list.isEmpty()){
+			System.out.println("list : " + list.size());
+		}
+		model.addAttribute("list", list);
+		return "staff_search_form";
+	}
+	
+	@RequestMapping(value="/delete")
+	public String delete(@Param("staff_no")int staff_no)throws Exception{
+		
+		return  "staff_search_form";
 	}
 }

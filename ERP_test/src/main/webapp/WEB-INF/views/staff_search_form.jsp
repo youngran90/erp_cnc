@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="/resources/css/stylesheet.css" rel="stylesheet">
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
@@ -28,53 +28,83 @@ $(function(){
 });
 
  function search_all(){
-	 alert("°Ë»ö");
+	 alert("ì „ì²´ê²€ìƒ‰");
 	 location.href="/staff_all";
  }
 
+ 
+ function search(){
+	 alert("ê²€ìƒ‰");
+	 
+	 var before_grade_year = $("#before_grade_year").val();
+	 var before_grade_month = $("#before_grade_month").val();
+	 var before_grade_day = $("#before_grade_day").val();
+	 var before_graduate_day = $("#before_graduate_day").val(before_grade_year+"-"+before_grade_month+"-"+before_grade_day);
+
+	  var after_grade_year = $("#after_grade_year").val();
+	 var after_grade_month = $("#after_grade_month").val();
+	 var after_grade_day = $("#after_grade_day").val();
+	 var after_graduate_day = $("#after_graduate_day").val(after_grade_year+"-"+after_grade_month+"-"+after_grade_day);
+
+     if(before_grade_year > after_grade_year){
+    	 alert("ì´ì „ì¼ ë‚ ì§œê°€ ì˜ëª»ì…ë ¥ë˜ì—ˆìŠµë‹ˆë‹¤");
+    	 return false;
+     }else{
+    	 document.getElementById('searchForm').submit();
+     }
+	 
+ }
+ 
+ function goEditDel(staff_no){
+	 alert(staff_no);
+	 location.href="/staff_updel_form?staff_no="+staff_no;
+ }
 
 
 </script>
-<title>»ç¿ø Á¤º¸ °Ë»ö</title>
+<title>ì‚¬ì› ì •ë³´ ê²€ìƒ‰</title>
 </head>
 <body>
-	<form action="" class="erp_table">
+	<form action="search" class="erp_table" id="searchForm" name="searchForm" method="post">
 		<table>
 			<thead>
 				<tr>
-					<th colspan="6">»ç¿ø Á¤º¸ °Ë»ö</th>
+					<th colspan="6">ì‚¬ì› ì •ë³´ ê²€ìƒ‰</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td>ÀÌ¸§</td>
-					<td><input type="text" id="staff_name" id="staff_name"></td>
-					<td>¼ºº°</td>
-					<td><input type="checkbox" name="gender" id="gender" value="³²" >³² 
-					<input type="checkbox" name="gender" id="gender" value="¿©">¿©</td>
-					<td>Á¾±³</td>
-					<td><select name="religion_name">
-							<option value=""></option>
-							<option value="±âµ¶±³">±âµ¶±³</option>
-							<option value="ÃµÁÖ±³">ÃµÁÖ±³</option>
-							<option value="ºÒ±³">ºÒ±³</option>
-							<option value="ÀÌ½½¶÷">ÀÌ½½¶÷</option>
-							<option value="¹«±³">¹«±³</option>
-					</select></td>
+					<td>ì´ë¦„</td>
+					<td><input type="text" id="staff_name" name="staff_name"></td>
+					<td>ì„±ë³„</td>
+					<td><input type="checkbox" name="gender" id="gender" value="1" >ë‚¨ 
+					<input type="checkbox" name="gender" id="gender" value="2">ì—¬</td>
+					<td>ì¢…êµ</td>
+					<td>
+						<select name="religion_code" id="religion_code">
+							<option value="0"></option>
+							<option value="1">ê¸°ë…êµ</option>
+							<option value="2">ì²œì£¼êµ</option>
+							<option value="3">ë¶ˆêµ</option>
+							<option value="4">ì´ìŠ¬ëŒ</option>
+							<option value="5">ë¬´êµ</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
-					<td>ÇĞ·Â</td>
+					<td>í•™ë ¥</td>
 					<td>
-						<input type="checkbox" name="school_name" id="school_name" value="°íÁ¹">°íÁ¹ 
-						<input type="checkbox" name="school_name" id="school_name" value="Àü¹®´ëÁ¹">Àü¹®´ëÁ¹ 
-						<input type="checkbox" name="school_name" id="school_name" value="ÀÏ¹İ´ëÁ¹">ÀÏ¹İ´ëÁ¹
+						<input type="checkbox" name="school_codes" id="school_codes" value="1">ê³ ì¡¸ 
+						<input type="checkbox" name="school_codes" id="school_codes" value="2">ì „ë¬¸ëŒ€ì¡¸ 
+						<input type="checkbox" name="school_codes" id="school_codes" value="3">ì¼ë°˜ëŒ€ì¡¸
 					</td>
-					<td>±â¼ú</td>
-					<td colspan="3"><input type="checkbox" name="skill" class="skill" value="Java">Java 
-					<input type="checkbox" name="skill" class="skill" value="JSP">JSP 
-					<input type="checkbox" name="skill" class="skill" value="ASP">ASP
-						<input type="checkbox" name="skill" class="skill" value="PHP">PHP
-						<input type="checkbox" name="skill" class="skill" value="Delphi">Delphi
+					<td>ê¸°ìˆ </td>
+					<td colspan="3">
+						 <input type="checkbox" name="skill_codes" id="skill_codes" value="1">Java 
+						<input type="checkbox" name="skill_codes" id="skill_codes" value="2">JSP 
+						<input type="checkbox" name="skill_codes" id="skill_codes" value="3">ASP
+						<input type="checkbox" name="skill_codes" id="skill_codes" value="4">PHP
+						<input type="checkbox" name="skill_codes" id="skill_codes" value="5">Delphi
 					</td>
 				</tr>
 				<tr>
@@ -82,73 +112,79 @@ $(function(){
 				<jsp:useBean id="todayyear" class="java.util.Date"/>
 					<fmt:formatDate value="${todayyear}" pattern="yyyy" var="todayYear"/>
 				
-					<td>Á¹¾÷ÀÏ</td>
+					<td>ì¡¸ì—…ì¼</td>
 					<td colspan="5">
-					<!-- Á¹¾÷ÀÏ Àü -->
+					<!-- ì¡¸ì—…ì¼ ì „ -->
 					<select name="before_grade_year" id="before_grade_year">
 							<option value=""></option>
 							<c:forEach var="ye" begin="1900" end="${todayYear}">
 								<option value="${ye}">${ye}</option>
 							</c:forEach>
-					</select> ³â 
+					</select> ë…„ 
 					<select name="before_grade_month" id="before_grade_month">
 							<option value=""></option>
 							<c:forEach var="m" begin="1" end="12">
 								<option value="${m}">${m}</option>
 							</c:forEach>
-					</select>¿ù
+					</select>ì›”
 					<select name="before_grade_day" id="before_grade_day">
 						<option value=""></option>
 							<c:forEach var="d" begin="1" end="31">
 								<option value="${d}">${d}</option>
 							</c:forEach>
-					</select>ÀÏ ~
-					<!-- Á¹¾÷ÀÏ ÈÄ -->
+					</select>ì¼ ~
+					<!-- ì¡¸ì—…ì¼ í›„ -->
 					<select name="after_grade_year" id="after_grade_year">
 							<option value=""></option>
 							<c:forEach var="ye" begin="1900" end="${todayYear}">
 								<option value="${ye}">${ye}</option>
 							</c:forEach>
-					</select> ³â 
+					</select> ë…„ 
 					<select name="after_grade_month" id="after_grade_month">
 							<option value=""></option>
 							<c:forEach var="m" begin="1" end="12">
 								<option value="${m}">${m}</option>
 							</c:forEach>
-					</select>¿ù
+					</select>ì›”
 					<select name="after_grade_day" id="after_grade_day">
 						<option value=""></option>
 							<c:forEach var="d" begin="1" end="31">
 								<option value="${d}">${d}</option>
 							</c:forEach>
-					</select>ÀÏ
-					
+					</select>ì¼
+						 <input type="hidden" id="before_graduate_day" name="before_graduate_day" value="">
+						<input type="hidden" id="after_graduate_day" name="after_graduate_day" value=""> 
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
 			<div id="bt_group" class="bt_group">
-			<input type="button" id="search" value="°Ë»ö"> 
-			<input	type="button" id="search_all" onclick="search_all()" value="ÀüºÎ°Ë»ö"> 
-			<input	type="button" id="reset" value="ÃÊ±âÈ­"> 
-			<input	type="button" id="register" value="µî·Ï">
+			<input type="button" id="search" value="ê²€ìƒ‰" onclick="search()"> 
+			<input	type="button" id="search_all"  value="ì „ë¶€ê²€ìƒ‰" onclick="search_all()"> 
+			<input	type="button" id="reset" value="ì´ˆê¸°í™”"> 
+			<input	type="button" id="register" value="ë“±ë¡">
 		</div>
 
-	<c:if test="${staff_all ne null}">
+	
 		<table>
 			<thead>
 				<tr>
-					<th>¹øÈ£</th>
-					<th>ÀÌ¸§</th>
-					<th>¼ºº°</th>
-					<th>Á¾±³</th>
-					<th>Á¹¾÷ÀÏ</th>
+					<th>ë²ˆí˜¸</th>
+					<th>ì´ë¦„</th>
+					<th>ì„±ë³„</th>
+					<th>ì¢…êµ</th>
+					<th>ì¡¸ì—…ì¼</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="list" items="${staff_all}" varStatus="status">
+			<c:if test="${list eq null}">
+			<td colspan="6">	ê²€ìƒ‰ ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.</td>
+			</c:if>
+			
+			<c:if test="${list ne null}">
+			<c:forEach var="list" items="${list}" varStatus="status">
 				<tr>
 					<td>${status.count}</td>
 					<td>${list.staff_name}</td>
@@ -156,21 +192,22 @@ $(function(){
 					<c:set var="jumin" value="${list.jumin_no}" ></c:set>
 					<c:set var="gender" value = "${fn:substring(jumin, 7, 8)}" ></c:set>
 					<c:choose>
-					  <c:when test="${gender eq '1'}">³²</c:when>
-					  <c:when test="${gender eq '2'}">¿©</c:when>
+					  <c:when test="${gender eq '1'}">ë‚¨</c:when>
+					  <c:when test="${gender eq '2'}">ì—¬</c:when>
 					 <c:otherwise>no</c:otherwise>
 					  </c:choose>
 					</td>
 					<td>${list.religion_name}</td>
 					<td>${list.graduate_day}</td>
 					<td>
-						<button id="updel" name="updel" class="updel" onclick="location.href='/staff_updel_form?staff_no='${list.staff_no}'">¼öÁ¤/»èÁ¦</button>
+						<button id="updel" name="updel" class="updel" onclick="goEditDel(${list.staff_no})">ìˆ˜ì •/ì‚­ì œ</button>
 					</td>
 				</tr>
 				</c:forEach>
+				</c:if>
 			</tbody>
 		</table>
-	</c:if>
+
 
 
 
